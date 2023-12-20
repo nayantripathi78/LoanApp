@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">LoanApp</string>
-    <string name="login">Login</string>
+    <string name="login">LOGIN</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="signup">SignUp</string>
+    <string name="signup">SIGNUP</string>
     <string name="new_user">New User | Create new account.</string>
+    <string name="phone_number">PhoneNumber</string>
+    <string name="lender">Lender</string>
+    <string name="borrower">Borrower</string>
+    <string name="name">Name</string>
 </resources>
