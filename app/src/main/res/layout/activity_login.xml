@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
     <TextView
-        android:id="@+id/goToSignupPage"
+        android:id="@+id/goto_signup_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_user"

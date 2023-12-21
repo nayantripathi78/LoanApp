@@ -31,13 +31,13 @@
         app:layout_constraintTop_toBottomOf="@id/textView">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioLender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lender" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioBorrower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

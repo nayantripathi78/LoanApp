@@ -5,9 +5,20 @@ data class User(
     val email: String?,
     val phoneNumber: String?,
     val password: String?,
-    val status: String?
+    val status: String?,
+    val type: String
 ) {
+    constructor(user: Map<String, Any>) : this(
+        user["name"].toString(),
+        user["email"].toString(),
+        user["phoneNumber"].toString(),
+        user["password"].toString(),
+        user["status"].toString(),
+        user["type"].toString()
+    )
+
     fun isValid(): Boolean {
-        return name != null && email != null && phoneNumber != null && password != null
+        return name != null && email != null && phoneNumber != null
+                && password != null
     }
 }

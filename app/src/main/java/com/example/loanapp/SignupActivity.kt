@@ -14,6 +14,8 @@ private const val TAG = "SignupActivity"
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: Database
+    private lateinit var userType: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
@@ -28,7 +30,8 @@ class SignupActivity : AppCompatActivity() {
                 binding.userEmail.text.toString(),
                 binding.userPhoneNumber.text.toString(),
                 binding.userPassword.text.toString(),
-                "clear"
+                "clear",
+                userType
             )
 
             if (user.isValid()) {
@@ -36,6 +39,8 @@ class SignupActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Log.d(TAG, "signupWithEmail: success")
+                            db = Database()
+                            db.addUserOnDatabase(auth.uid!!, user)
                             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                         } else {
                             Log.d(TAG, "signupWithEmail: failed", it.exception)
@@ -44,6 +49,12 @@ class SignupActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Enter valid input", Toast.LENGTH_SHORT).show()
             }
+        }
+        binding.radioLender.setOnClickListener {
+            userType = "lender"
+        }
+        binding.radioBorrower.setOnClickListener {
+            userType = "borrower"
         }
     }
 }
