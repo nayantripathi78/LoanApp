@@ -34,7 +34,7 @@ class SignupActivity : AppCompatActivity() {
                 userType
             )
 
-            if (user.isValid()) {
+            if (user.email.isNotEmpty() and user.password.isNotEmpty()) {
                 auth.createUserWithEmailAndPassword(user.email!!, user.password!!)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
