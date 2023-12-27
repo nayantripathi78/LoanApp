@@ -39,21 +39,18 @@ class Database {
             }
     }
 
-    suspend fun getUserFromDatabase(userId: String): User? {
-        var user: User? = null
-        db = Firebase.firestore
-        db.collection("users")
+    fun getUserFromDatabase(userId: String): User {
+        val task = Firebase.firestore
+            .collection("users")
             .document(userId)
             .get()
             .addOnSuccessListener {
-                user = User(it.data!!)
-                Log.d(TAG, "getUserFromDatabase: $user")
+
             }
             .addOnFailureListener {
 
             }
-            .await()
-        return user
+        return User(task.result.data!!)
     }
 
     fun getBorrowerListFromDatabase(): Unit {
