@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.content.edit
+import android.widget.Toast
 import com.example.loanapp.databinding.ActivityLoginBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -24,26 +24,28 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.userEmail.text.toString()
             val password = binding.userPassword.text.toString()
-            auth = Firebase.auth
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Log.d(TAG, "loginWithEmail: success")
-                        val uid = auth.uid.toString()
-
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                Log.d(TAG, "signInWithEmailAndPassword: onProcess")
+                auth = Firebase.auth
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "signInWithEmailAndPassword: success")
+                        val userId = auth.uid.toString()
                         /*
                         this.getPreferences(MODE_PRIVATE).edit {
                             putString(KEY, uid)
                             commit()
                         }
                          */
-
-                        gotoHomeActivity(uid)
-                    } else {
-                        Log.d(TAG, "loginWithEmail: failed", it.exception)
+                        goToHomeActivity(userId)
                     }
-                }
+                    .addOnFailureListener {
+                        Log.d(TAG, "signInWithEmailAndPassword: failed", it.cause)
+                    }
+            } else {
+                Toast.makeText(this, "Enter valid input", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.gotoSignupPage.setOnClickListener {
@@ -58,15 +60,16 @@ class LoginActivity : AppCompatActivity() {
         val sharedPref = this.getPreferences(MODE_PRIVATE)
         val uid = sharedPref.getString(KEY, null)
         if (uid != null) {
-            gotoHomeActivity(uid)
+            goToHomeActivity(uid)
         }
          */
     }
 
-    private fun gotoHomeActivity(uid: String) {
-        Log.d(TAG, "gotoHomeActivity: process $uid")
+    private fun goToHomeActivity(userId: String) {
+        Log.d(TAG, "goToHomeActivity: onProcess")
         val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra("user_id", uid)
+        //pass user id to home activity
+        intent.putExtra("user_id", userId)
         startActivity(intent)
     }
 }

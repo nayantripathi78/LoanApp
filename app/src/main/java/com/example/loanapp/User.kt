@@ -4,8 +4,8 @@ data class User(
     val name: String,
     val email: String,
     val phoneNumber: String,
-    val password: String,
-    val status: String,
+    var password: String,
+    val records: MutableMap<*, *>,
     val type: String
 ) {
     constructor(user: Map<String, Any>) : this(
@@ -13,7 +13,14 @@ data class User(
         user["email"].toString(),
         user["phoneNumber"].toString(),
         user["password"].toString(),
-        user["status"].toString(),
+        user["records"] as MutableMap<*, *>,
         user["type"].toString()
     )
+
+    fun verify() = name.isNotEmpty()
+            && email.isNotEmpty()
+            && phoneNumber.isNotEmpty()
+            && password.isNotEmpty()
+            && type.isNotEmpty()
+
 }

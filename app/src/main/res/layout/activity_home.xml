@@ -9,15 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <FrameLayout
-        android:id="@+id/frameContainer"
+        android:id="@+id/fragmentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!-- This FrameLayout will hold either LenderFragment or BorrowerFragment based on the user's role -->
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

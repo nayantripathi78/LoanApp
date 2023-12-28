@@ -27,13 +27,20 @@ class HomeActivity : AppCompatActivity() {
         userId = intent.getStringExtra("user_id").toString()
 
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "launchCoroutine: success")
+
             val user = getUserFromDatabase(userId)
-            if (user != null) openFragment(user.type) else finish()
+            if (user != null) openFragment(user.type) else {
+                Log.d(TAG, "getUserFromDatabase: result: user == null")
+                finish()
+            }
         }
 
     }
 
     private suspend fun getUserFromDatabase(uid: String): User? {
+        Log.d(TAG, "getUserFromDatabase: onProcess")
+
         val task = Firebase.firestore
             .collection("users")
             .document(uid)
@@ -49,6 +56,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun openFragment(userType: String) {
+        Log.d(TAG, "open${userType}Fragment: onProcess")
+
         binding.progressBar.visibility = View.INVISIBLE
         val fragment: Fragment = when (userType) {
             "lender" -> LenderFragment()
@@ -58,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frameContainer, fragment)
+            .replace(R.id.fragmentFrame, fragment)
             .commit()
     }
 }
